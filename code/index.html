@@ -10,7 +10,7 @@
 
 
 <h1>Hent adresser</h1>
-<table class="table table-bordered table-sm" id="dropD">
+<table class="table table-bordered table-sm" id="JSONTable">
   <thead>
   <tr>
     <th>ID</th>
@@ -37,40 +37,48 @@
   <tbody style="text-align: center">
   </tbody>
 </table>
+<p>
+  <select id="dd"></select>
+</p>
+<p>
+  Vejnavn:
+  <span id="output"></span>
+</p>
+
+<button onclick="getOption()" class="btn btn-primary btn-md">CLICK ME</button>
 
 
-
+<!--<script src="fetch.js"></script>-->
 <script>
+
+  let addrMap;
+  let upd;
+  const tableBody = document.getElementById("JSONTable")
+  const dropdown = document.getElementById("dd")
+
   fetch("https://dawa.aws.dk/autocomplete?caretpos=5&fuzzy=&q=havnb&startfra=adresse&type=adresse")
     .then(response => response.json())
     .then(data => {
-      const addrMap = data.map(dd => dd.data)
+      addrMap = data.map(dd => dd.data)
+
       console.log(addrMap)
-
+      upd = updateDropDown(data.map(x => Object.values(x).slice(4,5)))
+      console.log(upd)
+      const da = data.map(x => Object.values(x).slice(0,1))
+      // console.log(da)
       updateTableHTML(addrMap.map(x => Object.values(x)))
-
+      updateDropDown(addrMap.map(x => Object.values(x)))
     })
 
-  const tableBody = document.getElementById("dropD");
+
+  function getOption() {
+    const selectElement = document.querySelector('#dd');
+    const output = selectElement.options[selectElement.selectedIndex]
+    document.querySelector('#output').textContent = output;
+  }
+
 
   function updateTableHTML(array1) {
-
-    // array2.forEach(function(row) {
-    //   const newrow = document.createElement("th")
-    //   tableBody.appendChild(newrow)
-    //
-    //   row.forEach()
-    //   // if (row instanceof Array){
-    //   //   row.forEach(function (cell){
-    //   //     const newRow = document.createElement("th");
-    //   //     tableBody.appendChild(newRow);
-    //   //     const newCell = document.createElement("td");
-    //   //     newCell.textContent = cell;
-    //   //     newRow.appendChild(newCell);
-    //   //     console.log(cell)
-    //   //   })
-    //     })
-
 
     array1.forEach(function(row) {
       const newRow = document.createElement("tr");
@@ -89,8 +97,17 @@
       }
     });
   }
+  function updateDropDown(array1){
+    // array1.forEach(a => console.log(a))
+    array1.forEach(a => fillDropDown(a))
+
+  }
+  function fillDropDown(item) {
+    let el = document.createElement("option")
+    el.textContent = item
+    dropdown.appendChild(el)
+  }
 </script>
-<!--<script src="fetch.js"></script>-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

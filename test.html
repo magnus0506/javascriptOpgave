@@ -1,0 +1,70 @@
+[10:08 PM] Malene Neergaard Sørensen
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+    Google your street
+  </title>
+</head>
+<body>
+<h1 style="color: darkblue">
+  StreetSearcher
+</h1>
+</b>
+<p>
+  Select your adress:
+  <select id="select1">
+    <option value="Ingerslevsgade">Ingerslevsgade</option>
+    <option value="Skjulhøj Allé">Skjulhøj Allé</option>
+    <option value="Pilestræde">Pilestræde</option>
+    <option value="Værnedamsvej">Værnedamsvej</option>
+    <option value="Roskildevej">Roskildevej</option>
+    <option value="Valby Langgade">Valby Langgade</option>
+  </select>
+</p>
+<p>
+  Street name:
+  <span class="output"></span>
+</p>
+<button onclick="getOption()">
+  Verify
+</button>
+<p>
+  Select streetnumber:
+  <select id="select2">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
+</p>
+<p>
+  Street number:
+  <span class="output2"></span>
+</p>
+<button onclick="getOption2()">
+  Verify
+</button>
+<script type="text/javascript">
+  function getOption() {
+  selectElement = document.querySelector('#select1');
+    output =
+      selectElement.options[selectElement.selectedIndex].value;
+    document.querySelector('.output').textContent = output;
+  }
+function getOption2() {
+  selectElement = document.querySelector('#select2');
+  output2 =
+    selectElement.options[selectElement.selectedIndex].value;
+  document.querySelector('.output2').textContent = output2;
+}
+</script>
+</body>
+</html>
+
+
